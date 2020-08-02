@@ -1,10 +1,12 @@
 {
-	"activities": [{
-		"1": "work at pt",
-		"2": "coding html and css",
-		"3": "learning js",
-		"4": "reading",
-		"5": "meditation",
-		"6": "eating"
-	}]
+	"activities": [
+		"workout",
+		"work at pt",
+		"meditation",
+		"coding in html, css",
+		"learning js"
+	],
+	"users": {
+		"Nadya": "human"
+	}
 }

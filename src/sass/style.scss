@@ -18,4 +18,8 @@
 	outline: 1px solid red;
 }
 
+.activities {
+	@include reset-list;
+}
+
 @import "blocks/header";
