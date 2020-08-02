@@ -38,6 +38,7 @@ gulp.task('watch', function () {
 	gulp.watch("src/sass/**/*.+(scss|sass|css)", gulp.parallel('styles'));
 	gulp.watch("src/*.html").on("change", gulp.parallel('html'));
 	gulp.watch("src/js/*.js").on("change", gulp.parallel('scripts'));
+	gulp.watch("src/*.json").on("change", gulp.parallel('jsondata'));
 });
 
 gulp.task('html', function () {
@@ -51,6 +52,11 @@ gulp.task('html', function () {
 gulp.task('scripts', function () {
 	return gulp.src("src/js/**/*.js")
 		.pipe(gulp.dest('dist/js'));
+});
+
+gulp.task('jsondata', function () {
+	return gulp.src("src/**/*.json")
+		.pipe(gulp.dest('dist/'));
 });
 
 gulp.task('fonts', function () {
