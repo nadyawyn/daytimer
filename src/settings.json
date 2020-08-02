@@ -1,10 +1,20 @@
 {
-	"activities": [
-		"workout",
-		"work at pt",
-		"meditation",
-		"coding in html, css",
-		"learning js"
+	"activitiesexp": [{
+			"name": "workout",
+			"color": "red"
+		},
+		{
+			"name": "meditation",
+			"color": "blue"
+		},
+		{
+			"name": "learning JS",
+			"color": "green"
+		},
+		{
+			"name": "eating",
+			"color": "orange"
+		}
 	],
 	"users": {
 		"Nadya": "human"
