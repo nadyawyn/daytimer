@@ -19,14 +19,14 @@
 		<div class="container">
 
 			<div class="main__items counter__settings">
-				<div class="main__item">
+				<div class="main__item main__item_tags">
 					<h3>Choose activity tag:</h3>
 					<ul class="activities">
 
 					</ul>
 				</div>
 				<div class="main__item">
-					<button class="button button_start">start</button>
+					<button class="button button_start inactive">set a tag</button>
 					<h4>Current activity:</h4>
 					<div class="main__activities" id="current-activity">
 
@@ -35,8 +35,8 @@
 				<div class="main__item">
 					<button class="button button_stop">stop</button>
 					<h4>History:</h4>
-					<div class="main__activities">
-						456
+					<div class="main__activities main__activities_history" id="history-activity">
+
 					</div>
 				</div>
 			</div>
@@ -49,7 +49,7 @@
 
 	</main>
 	<footer class="footer">
-
+		<button id="clearls">clear local storage</button>
 	</footer>
 	<script src="js/script.js"></script>
 </body>

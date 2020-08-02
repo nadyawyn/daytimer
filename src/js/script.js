@@ -52,14 +52,77 @@ window.addEventListener('DOMContentLoaded', function () {
 	//Tags behavior on click
 
 	let actTagList = document.querySelector('.activities'),
-		actTagAll = actTagList.childNodes,
 		actOutput = document.getElementById('current-activity');
 
 	actTagList.addEventListener('click', function (e) {
 		let tagText = e.target.textContent,
 			tagColor = e.target.id;
 		//actOutput.textContent = tagText;
-		actOutput.innerHTML = '<p style="background-color: ' + tagColor + '; color:#fff">' + tagText + '</p>';
+		actOutput.innerHTML = '<p id="actOutputPar" class="' + tagColor + '" style="background-color: ' + tagColor + '; color:#fff">' + tagText + '</p>';
+		startButton.classList.remove('inactive');
+		startButton.textContent = 'start';
 	});
 
+
+	//Start button
+
+	let startButton = document.querySelector('.button_start');
+
+
+	startButton.addEventListener('click', function () {
+		if ((actOutput.textContent == '') || (this.classList.contains('inactive'))) {
+
+		} else {
+			this.classList.add('inactive');
+			this.textContent = 'in progress...';
+			let thisActName = actOutput.textContent,
+				thisStartTime = new Date().getTime(),
+				thisPar = document.getElementById('actOutputPar'),
+				thisColor = thisPar.className,
+				//Date operations
+				thisDate = new Date(),
+				thisYear = thisDate.getFullYear(),
+				thisMonth = thisDate.getMonth(),
+				thisDay = thisDate.getDate(),
+				thisHours = thisDate.getHours(),
+				thisMinutes = thisDate.getMinutes(),
+				thisTime = thisHours + '-' + thisMinutes,
+
+				thisArray = {
+					name: thisActName,
+					color: thisColor,
+					start: thisStartTime
+				},
+
+				thisEntryTime = document.createElement('div'),
+				thisEntryName = document.createElement('div'),
+				thisEntryDuration = document.createElement('div'),
+
+				thisHistoryDiv = document.getElementById('history-activity');
+
+			thisEntryTime.classList.add('history__entry-time');
+			thisEntryTime.textContent = thisTime;
+			thisEntryName.classList.add('history__entry-name');
+			thisEntryName.textContent = thisActName;
+			thisEntryDuration.classList.add('history__entry-duration');
+			thisEntryDuration.id = thisTime;
+
+			thisHistoryDiv.appendChild(thisEntryTime);
+			thisHistoryDiv.appendChild(thisEntryName);
+			thisHistoryDiv.appendChild(thisEntryDuration);
+
+
+			localStorage.setItem(thisTime, JSON.stringify(thisArray));
+			localStorage.setItem(thisActName, thisStartTime);
+
+		}
+
+	});
+
+
+	let clearLS = document.getElementById('clearls');
+
+	clearLS.addEventListener('click', function () {
+		localStorage.clear();
+	});
 });
