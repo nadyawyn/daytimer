@@ -4,7 +4,7 @@
 
 		align-items: flex-start;
 
-		justify-content: space-around;
+		justify-content: space-between;
 
 		&_bottom {
 			margin-top: 20px;
@@ -13,4 +13,12 @@
 		}
 	}
 
+	&__activities {
+		font-size: 18px;
+		line-height: 28px;
+
+		p {
+			padding: 10px;
+		}
+	}
 }
