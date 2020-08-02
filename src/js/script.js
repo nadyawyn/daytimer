@@ -14,7 +14,6 @@ window.addEventListener('DOMContentLoaded', function () {
 	request.onload = function () {
 		let settingsList = request.response,
 			myActivitiesExp = settingsList.activitiesexp;
-		console.log(myActivitiesExp[0].color);
 		showActivities(myActivitiesExp);
 	};
 
