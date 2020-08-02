@@ -14,7 +14,6 @@ window.addEventListener('DOMContentLoaded', function () {
 	request.onload = function () {
 		let settingsList = request.response,
 			myActivities = settingsList.activities;
-		console.log(myActivities);
 		showActivities(myActivities);
 	};
 
