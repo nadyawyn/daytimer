@@ -35,8 +35,6 @@ window.addEventListener('DOMContentLoaded', function () {
 			return 0; // Никакой сортировки
 		});
 
-
-
 		for (let i = 0; i < myActivities.length; i++) {
 
 			let myActy = document.createElement('li'),

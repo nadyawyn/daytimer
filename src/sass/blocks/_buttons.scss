@@ -11,15 +11,42 @@
 
 	cursor: pointer;
 
+
 	&_start {
 		/* background: rgb(255, 113, 76);
 		background: linear-gradient(180deg, rgba(255, 113, 76, 1) 0%, rgba(249, 155, 69, 1) 50%, rgba(214, 52, 223, 1) 99%); */
 		background: rgb(180, 58, 172);
 		background: linear-gradient(153deg, rgba(180, 58, 172, 1) 0%, rgba(253, 200, 29, 1) 47%, rgba(252, 69, 69, 1) 100%);
+
+		&:hover {
+			background: linear-gradient(180deg, rgba(180, 58, 172, 1) 0%, rgba(253, 200, 29, 1) 47%, rgba(252, 69, 69, 1) 100%);
+			box-shadow: 0 0 30px rgba(255, 180, 21, 0.4);
+		}
+
+		&:focus {
+			box-shadow: 0 0 30px rgba(255, 180, 21, 0.4);
+		}
+
+		&:active {
+			box-shadow: 0 0 30px rgba(160, 100, 236, 0.6);
+		}
 	}
 
 	&_stop {
 		background: rgb(76, 240, 255);
 		background: linear-gradient(180deg, rgba(76, 240, 255, 1) 0%, rgba(69, 249, 155, 1) 50%, rgba(139, 52, 223, 1) 99%);
+
+		&:hover {
+			background: linear-gradient(270deg, rgba(76, 240, 255, 1) 0%, rgba(69, 249, 155, 1) 50%, rgba(139, 52, 223, 1) 99%);
+			box-shadow: 0 0 30px rgba(160, 100, 236, 0.4);
+		}
+
+		&:focus {
+			box-shadow: 0 0 30px rgba(160, 100, 236, 0.4);
+		}
+
+		&:active {
+			box-shadow: 0 0 30px rgba(255, 180, 21, 0.6);
+		}
 	}
 }
