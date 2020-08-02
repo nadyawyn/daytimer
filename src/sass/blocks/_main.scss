@@ -1,0 +1,16 @@
+.main {
+	&__items {
+		display: flex;
+
+		align-items: flex-start;
+
+		justify-content: space-around;
+
+		&_bottom {
+			margin-top: 20px;
+			justify-content: flex-start;
+
+		}
+	}
+
+}

@@ -1,19 +1,31 @@
 {
 	"activitiesexp": [{
 			"name": "workout",
-			"color": "red"
+			"color": "#ff661c"
 		},
 		{
 			"name": "meditation",
-			"color": "blue"
+			"color": "#a064ec"
 		},
 		{
 			"name": "learning JS",
-			"color": "green"
+			"color": "#fdc81d"
 		},
 		{
-			"name": "eating",
-			"color": "orange"
+			"name": "coding in HTML, CSS",
+			"color": "#16f5fc"
+		},
+		{
+			"name": "self-marketing",
+			"color": "#2bfc9d"
+		},
+		{
+			"name": "relax",
+			"color": "#ccc"
+		},
+		{
+			"name": "personal project",
+			"color": "#ff5f69"
 		}
 	],
 	"users": {
