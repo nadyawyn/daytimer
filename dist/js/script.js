@@ -93,6 +93,11 @@ window.addEventListener('DOMContentLoaded', function () {
 					color: thisColor,
 					start: thisStartTime
 				},
+				thisArrayTwo = {
+					start: thisStartTime,
+					end: '',
+					duration: ''
+				},
 
 				thisEntryTime = document.createElement('div'),
 				thisEntryName = document.createElement('div'),
@@ -113,7 +118,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
 			localStorage.setItem(thisTime, JSON.stringify(thisArray));
-			localStorage.setItem(thisActName, thisStartTime);
+			localStorage.setItem(thisActName, JSON.stringify(thisArrayTwo));
 
 		}
 
