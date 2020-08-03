@@ -232,44 +232,50 @@ window.addEventListener('DOMContentLoaded', function () {
 
 	function stopRecording() {
 		stopButton.addEventListener('click', function () {
-			clearInterval(timeInterval);
-			stopButton.classList.add('inactive');
-			startButton.textContent = 'set a tag';
+			if (this.classList.contains('inactive')) {
 
-			//reseting the previous TIMER values
-			secondsVal = 0;
-			minutesVal = 0;
-			hoursVal = 0;
-			totalValSec = 0;
+			} else {
+				clearInterval(timeInterval);
+				stopButton.classList.add('inactive');
+				startButton.textContent = 'set a tag';
 
-			//getting END time
-			let resultEndTime = new Date().getTime(),
-				//getting data from HISTORY
-				resultName = document.querySelectorAll('.num' + actCounter)[2].textContent,
-				resultColor = document.querySelectorAll('.num' + actCounter)[3].textContent,
-				resultStartTime = document.querySelectorAll('.num' + actCounter)[4].textContent,
+				//reseting the previous TIMER values
+				secondsVal = 0;
+				minutesVal = 0;
+				hoursVal = 0;
+				totalValSec = 0;
 
-				//getting DURATION
-				resultDuration = resultEndTime - +resultStartTime,
-				resultDsec = Math.floor((resultDuration / 1000) % 60),
-				resultDmin = Math.floor((resultDuration / 1000 / 60) % 60),
-				resultDhour = Math.floor((resultDuration / (1000 * 60 * 60)) % 24),
+				//getting END time
+				let resultEndTime = new Date().getTime(),
+					//getting data from HISTORY
+					resultName = document.querySelectorAll('.num' + actCounter)[2].textContent,
+					resultColor = document.querySelectorAll('.num' + actCounter)[3].textContent,
+					resultStartTime = document.querySelectorAll('.num' + actCounter)[4].textContent,
 
-				resultDurationOutput = document.querySelector('.history__entry-duration');
+					//getting DURATION
+					resultDuration = resultEndTime - +resultStartTime,
+					resultDsec = Math.floor((resultDuration / 1000) % 60),
+					resultDmin = Math.floor((resultDuration / 1000 / 60) % 60),
+					resultDhour = Math.floor((resultDuration / (1000 * 60 * 60)) % 24),
 
-			resultDurationOutput.textContent = resultDhour + ':' + resultDmin;
+					resultDurationOutput = document.querySelector('.history__entry-duration');
+
+				resultDurationOutput.textContent = resultDhour + ':' + resultDmin;
 
 
 
-			//forming data ARRAY to save
-			let resultArray = {
-				date: thisTimestamp,
-				name: resultName,
-				color: resultColor,
-				duration: resultDuration
-			};
-			//saving data to Local Storage
-			localStorage.setItem(actCounter, JSON.stringify(resultArray));
+				//forming data ARRAY to save
+				let resultArray = {
+					date: thisTimestamp,
+					name: resultName,
+					color: resultColor,
+					duration: resultDuration
+				};
+				//saving data to Local Storage
+				localStorage.setItem(actCounter, JSON.stringify(resultArray));
+			}
+
+
 		});
 	}
 
