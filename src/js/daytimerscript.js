@@ -258,9 +258,9 @@ window.addEventListener('DOMContentLoaded', function () {
 					resultDmin = Math.floor((resultDuration / 1000 / 60) % 60),
 					resultDhour = Math.floor((resultDuration / (1000 * 60 * 60)) % 24),
 
-					resultDurationOutput = document.querySelector('.history__entry-duration');
+					resultDurationOutput = document.querySelectorAll('.num' + actCounter)[5];
 
-				resultDurationOutput.textContent = resultDhour + ':' + resultDmin;
+				resultDurationOutput.textContent = resultDhour + ':' + resultDmin + ':' + resultDsec;
 
 
 
