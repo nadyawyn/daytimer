@@ -29,7 +29,6 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
 	// Getting data from JSON file
-
 	function getDataFromSettings() {
 		let requestURL = 'settings.json',
 			request = new XMLHttpRequest();
@@ -74,7 +73,6 @@ window.addEventListener('DOMContentLoaded', function () {
 	}
 
 	//Tags behavior on click
-
 	function chooseActivityTag() {
 		actTagList.addEventListener('click', function (e) {
 			let tagText = e.target.textContent,
@@ -87,7 +85,6 @@ window.addEventListener('DOMContentLoaded', function () {
 	}
 
 	//Start button behavior
-
 	function startRecording() {
 		startButton.addEventListener('click', function () {
 			let thisActName = actOutput.textContent;
@@ -101,9 +98,12 @@ window.addEventListener('DOMContentLoaded', function () {
 				//changing START button appearance
 				this.classList.add('inactive');
 				this.textContent = 'in progress...';
+				stopButton.classList.remove('inactive');
 				//defining OPERATION TIME
-				let thisHours = thisDate.getHours(),
-					thisMinutes = thisDate.getMinutes(),
+				let thisDateCur = new Date(),
+					thisStartTime = new Date().getTime(),
+					thisHours = thisDateCur.getHours(),
+					thisMinutes = thisDateCur.getMinutes(),
 					thisTime = thisHours + ':' + thisMinutes,
 					//defining TAG color
 					thisPar = document.getElementById('actOutputPar'),
@@ -116,6 +116,10 @@ window.addEventListener('DOMContentLoaded', function () {
 					thisEntryDate = document.createElement('div'),
 					thisEntryColor = document.createElement('div'),
 
+					thisEntryStart = document.createElement('div'),
+
+					thisEntryDuration = document.createElement('div'),
+
 					//creating elements for TIMER in progress output
 					thisTimerInProgress = document.createElement('span'),
 					thisTiPhours = document.createElement('span'),
@@ -126,25 +130,39 @@ window.addEventListener('DOMContentLoaded', function () {
 
 				//setting classes, contents, and adding HISTORY entry to place
 				thisEntryTime.classList.add('history__entry-time');
-				thisEntryTime.classList.add(actCounter);
-				//thisEntryTime.dataset.num = actCounter;
+				thisEntryTime.classList.add('num' + actCounter);
 				thisEntryTime.textContent = thisTime;
+
 				thisEntryName.classList.add('history__entry-name');
-				//thisEntryName.dataset.num = actCounter;
 				thisEntryName.textContent = thisActName;
-				thisEntryName.classList.add(actCounter);
-				thisEntryDate.classList.add('history__entry_date');
-				thisEntryDate.classList.add(actCounter);
-				//thisEntryDate.dataset.num = actCounter;
+				thisEntryName.classList.add('num' + actCounter);
+
+				thisEntryDate.classList.add('history__entry-date');
+				thisEntryDate.classList.add('thishidden');
+				thisEntryDate.classList.add('num' + actCounter);
 				thisEntryDate.textContent = thisTimestamp;
-				thisEntryColor.classList.add('history__entry_color');
-				thisEntryColor.classList.add(actCounter);
-				//thisEntryColor.dataset.num = actCounter;
+
+				thisEntryColor.classList.add('history__entry-color');
+				thisEntryColor.classList.add('thishidden');
+				thisEntryColor.classList.add('num' + actCounter);
 				thisEntryColor.textContent = thisColor;
+
+				thisEntryStart.classList.add('history__entry-start');
+				thisEntryStart.classList.add('thishidden');
+				thisEntryStart.classList.add('num' + actCounter);
+				thisEntryStart.textContent = thisStartTime;
+
+				thisEntryDuration.classList.add('history__entry-duration');
+				thisEntryDuration.classList.add('num' + actCounter);
+
+
+
 				thisHistoryDiv.appendChild(thisEntryDate);
 				thisHistoryDiv.appendChild(thisEntryTime);
 				thisHistoryDiv.appendChild(thisEntryName);
 				thisHistoryDiv.appendChild(thisEntryColor);
+				thisHistoryDiv.appendChild(thisEntryStart);
+				thisHistoryDiv.appendChild(thisEntryDuration);
 
 				//setting classes, contents, and adding TIMER to place
 				thisTimerInProgress.classList.add('timer-in-progress');
@@ -172,6 +190,7 @@ window.addEventListener('DOMContentLoaded', function () {
 		});
 	}
 
+	//Dynamic timer update
 	function updateClock() {
 		//setting variables for TIMER values
 		let hours = document.querySelector('.timer__hours'),
@@ -211,11 +230,54 @@ window.addEventListener('DOMContentLoaded', function () {
 		}
 	}
 
+	function stopRecording() {
+		stopButton.addEventListener('click', function () {
+			clearInterval(timeInterval);
+			stopButton.classList.add('inactive');
+			startButton.textContent = 'set a tag';
+
+			//reseting the previous TIMER values
+			secondsVal = 0;
+			minutesVal = 0;
+			hoursVal = 0;
+			totalValSec = 0;
+
+			//getting END time
+			let resultEndTime = new Date().getTime(),
+				//getting data from HISTORY
+				resultName = document.querySelectorAll('.num' + actCounter)[2].textContent,
+				resultColor = document.querySelectorAll('.num' + actCounter)[3].textContent,
+				resultStartTime = document.querySelectorAll('.num' + actCounter)[4].textContent,
+
+				//getting DURATION
+				resultDuration = resultEndTime - +resultStartTime,
+				resultDsec = Math.floor((resultDuration / 1000) % 60),
+				resultDmin = Math.floor((resultDuration / 1000 / 60) % 60),
+				resultDhour = Math.floor((resultDuration / (1000 * 60 * 60)) % 24),
+
+				resultDurationOutput = document.querySelector('.history__entry-duration');
+
+			resultDurationOutput.textContent = resultDhour + ':' + resultDmin;
+
+
+
+			//forming data ARRAY to save
+			let resultArray = {
+				date: thisTimestamp,
+				name: resultName,
+				color: resultColor,
+				duration: resultDuration
+			};
+			//saving data to Local Storage
+			localStorage.setItem(actCounter, JSON.stringify(resultArray));
+		});
+	}
 
 
 	getDataFromSettings();
 	chooseActivityTag();
 	startRecording();
+	stopRecording();
 
 
 	function clearLocalStorage() {
