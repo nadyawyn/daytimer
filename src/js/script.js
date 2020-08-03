@@ -72,9 +72,13 @@ window.addEventListener('DOMContentLoaded', function () {
 	});
 
 
-	//Start button
+	//Start & Stop buttons activation
 
-	let startButton = document.querySelector('.button_start');
+	let startButton = document.querySelector('.button_start'),
+		stopButton = document.querySelector('.button_stop'),
+		thisActName = actOutput.textContent,
+		thisPar = document.getElementById('actOutputPar');
+	//thisColor = thisPar.className;
 
 
 	startButton.addEventListener('click', function () {
@@ -86,9 +90,9 @@ window.addEventListener('DOMContentLoaded', function () {
 			this.classList.add('inactive');
 			this.textContent = 'in progress...';
 
-			let thisActName = actOutput.textContent,
+			let //thisActName = actOutput.textContent,
 				//thisStartTime = new Date().getTime(),
-				thisPar = document.getElementById('actOutputPar'),
+				//thisPar = document.getElementById('actOutputPar'),
 				thisColor = thisPar.className,
 				//Date operations
 				thisDate = new Date(),
