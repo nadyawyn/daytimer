@@ -1,5 +1,13 @@
 window.addEventListener('DOMContentLoaded', function () {
 
+	//Set the number of actions of Start button so far
+	let actCounter = 0,
+		localStorageNumber = localStorage.getItem('actCounter');
+	if (localStorageNumber != 0) {
+		actCounter = localStorageNumber;
+	}
+
+
 	let activitiesUl = document.querySelector('.activities');
 
 	// Getting data from JSON file
@@ -73,35 +81,33 @@ window.addEventListener('DOMContentLoaded', function () {
 		if ((actOutput.textContent == '') || (this.classList.contains('inactive'))) {
 
 		} else {
+			actCounter++;
+			localStorage.setItem("actCounter", actCounter);
 			this.classList.add('inactive');
 			this.textContent = 'in progress...';
+
 			let thisActName = actOutput.textContent,
-				thisStartTime = new Date().getTime(),
+				//thisStartTime = new Date().getTime(),
 				thisPar = document.getElementById('actOutputPar'),
 				thisColor = thisPar.className,
 				//Date operations
 				thisDate = new Date(),
 				thisYear = thisDate.getFullYear(),
-				thisMonth = thisDate.getMonth(),
+				thisMonth = thisDate.getMonth() + 1,
 				thisDay = thisDate.getDate(),
 				thisHours = thisDate.getHours(),
 				thisMinutes = thisDate.getMinutes(),
 				thisTime = thisHours + '-' + thisMinutes,
-
-				thisArray = {
-					name: thisActName,
-					color: thisColor,
-					start: thisStartTime
-				},
-				thisArrayTwo = {
-					start: thisStartTime,
-					end: '',
-					duration: ''
-				},
+				thisTimestamp = thisYear + '-' + thisMonth + '-' + thisDay,
 
 				thisEntryTime = document.createElement('div'),
 				thisEntryName = document.createElement('div'),
-				thisEntryDuration = document.createElement('div'),
+				thisEntryDuration = document.createElement('span'),
+				thisEDhours = document.createElement('span'),
+				thisEDminutes = document.createElement('span'),
+				thisEDseconds = document.createElement('span'),
+				thisDividerH = document.createElement('span'),
+				thisDividerM = document.createElement('span'),
 
 				thisHistoryDiv = document.getElementById('history-activity');
 
@@ -111,14 +117,81 @@ window.addEventListener('DOMContentLoaded', function () {
 			thisEntryName.textContent = thisActName;
 			thisEntryDuration.classList.add('history__entry-duration');
 			thisEntryDuration.id = thisTime;
+			thisEDhours.classList.add('history__entry-duration_hours');
+			thisEDhours.textContent = '00';
+			thisEDminutes.classList.add('history__entry-duration_minutes');
+			thisEDminutes.textContent = '00';
+			thisEDseconds.classList.add('history__entry-duration_seconds');
+			thisEDseconds.textContent = '00';
+			thisDividerH.textContent = ':';
+			thisDividerM.textContent = ':';
 
 			thisHistoryDiv.appendChild(thisEntryTime);
 			thisHistoryDiv.appendChild(thisEntryName);
-			thisHistoryDiv.appendChild(thisEntryDuration);
+			thisPar.appendChild(thisEntryDuration);
+			thisEntryDuration.appendChild(thisEDhours);
+			thisEntryDuration.appendChild(thisDividerH);
+			thisEntryDuration.appendChild(thisEDminutes);
+			thisEntryDuration.appendChild(thisDividerM);
+			thisEntryDuration.appendChild(thisEDseconds);
+
+			//Counter
+			let hoursVal = 0,
+				minutesVal = 0,
+				secondsVal = 0,
+				totalValSec = 0,
+				hours = document.querySelector('.history__entry-duration_hours'),
+				minutes = document.querySelector('.history__entry-duration_minutes'),
+				seconds = document.querySelector('.history__entry-duration_seconds'),
+				testTC = document.querySelector('.testTimeCheck'),
+
+				timeInterval = setInterval(updateClock, 1000);
 
 
-			localStorage.setItem(thisTime, JSON.stringify(thisArray));
-			localStorage.setItem(thisActName, JSON.stringify(thisArrayTwo));
+			function updateClock() {
+				totalValSec++;
+				testTC.textContent = totalValSec;
+
+				if (secondsVal < 59) {
+					secondsVal++;
+				} else {
+					secondsVal = 0;
+					if (minutesVal < 59) {
+						minutesVal++;
+					} else {
+						minutesVal = 0;
+						hoursVal++;
+					}
+				}
+
+				if (secondsVal < 10) {
+					seconds.textContent = '0' + secondsVal;
+				} else {
+					seconds.textContent = secondsVal;
+				}
+				if (minutesVal < 10) {
+					minutes.textContent = '0' + minutesVal;
+				} else {
+					minutes.textContent = minutesVal;
+				}
+				if (hoursVal < 10) {
+					hours.textContent = '0' + hoursVal;
+				} else {
+					hours.textContent = hoursVal;
+				}
+
+			}
+			updateClock();
+
+			let thisArray = {
+				date: thisTimestamp,
+				name: thisActName,
+				color: thisColor,
+				//duration: totalValSec
+			};
+			localStorage.setItem(actCounter, JSON.stringify(thisArray));
+			//localStorage.setItem(thisTime, JSON.stringify(thisArray));
+			//localStorage.setItem(thisActName, JSON.stringify(thisArrayTwo));
 
 		}
 
@@ -130,4 +203,6 @@ window.addEventListener('DOMContentLoaded', function () {
 	clearLS.addEventListener('click', function () {
 		localStorage.clear();
 	});
+
+
 });
