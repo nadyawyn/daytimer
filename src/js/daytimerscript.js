@@ -208,11 +208,11 @@ window.addEventListener('DOMContentLoaded', function () {
 		//setting variables for TIMER values
 		let hours = document.querySelector('.timer__hours'),
 			minutes = document.querySelector('.timer__minutes'),
-			seconds = document.querySelector('.timer__seconds'),
-			testTC = document.querySelector('.testTimeCheck');
+			seconds = document.querySelector('.timer__seconds');
+		//testTC = document.querySelector('.testTimeCheck');
 
-		totalValSec++;
-		testTC.textContent = totalValSec;
+		//totalValSec++;
+		//testTC.textContent = totalValSec;
 
 		if (secondsVal < 59) {
 			secondsVal++;
