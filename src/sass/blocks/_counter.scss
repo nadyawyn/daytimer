@@ -1,0 +1,19 @@
+.counter {
+	&__output {
+		height: 100px;
+		width: 100%;
+		margin-top: 20px;
+		border: 1px solid #bbb;
+
+		display: flex;
+		flex-flow: row wrap;
+
+		&-item {
+			display: block;
+			background-color: yellowgreen;
+
+			height: 100%;
+			width: 30px;
+		}
+	}
+}

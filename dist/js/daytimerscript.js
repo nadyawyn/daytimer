@@ -14,6 +14,8 @@ window.addEventListener('DOMContentLoaded', function () {
 		startButton = document.querySelector('.button_start'),
 		stopButton = document.querySelector('.button_stop'),
 		thisHistoryDiv = document.getElementById('history-activity'),
+		counterOutputSerial = document.querySelector('.counter__output_serial'),
+		counterOutputAccum = document.querySelector('.counter__output_accum'),
 		//Getting the CURRENT DATE
 		thisDate = new Date(),
 		thisYear = thisDate.getFullYear(),
@@ -266,6 +268,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 				//forming data ARRAY to save
 				let resultArray = {
+					ind: actCounter,
 					date: thisTimestamp,
 					name: resultName,
 					color: resultColor,
@@ -273,17 +276,59 @@ window.addEventListener('DOMContentLoaded', function () {
 				};
 				//saving data to Local Storage
 				localStorage.setItem(actCounter, JSON.stringify(resultArray));
+
+				getDataFromLocalStorage();
 			}
 
 
 		});
 	}
 
+	function getDataFromLocalStoragePrev() {
+		for (let i = 1; i < localStorage.length; i++) {
+
+			let myArr = JSON.parse(localStorage.getItem(i));
+
+			let outputWidth = Math.floor(myArr.duration / 2000),
+				counterOutputItemSerial = document.createElement('div');
+
+			counterOutputItemSerial.classList.add('counter__output-item');
+			counterOutputItemSerial.classList.add('counter__output-item_serial');
+			counterOutputItemSerial.style.width = outputWidth + 'px';
+			counterOutputItemSerial.style.backgroundColor = myArr.color;
+
+			counterOutputSerial.appendChild(counterOutputItemSerial);
+
+		}
+	}
+
+	function getDataFromLocalStorage() {
+
+		for (let i = actCounter; i < localStorage.length; i++) {
+
+			let myArr = JSON.parse(localStorage.getItem(i));
+
+			let outputWidth = Math.floor(myArr.duration / 2000),
+				counterOutputItemSerial = document.createElement('div');
+			console.log(outputWidth);
+
+			counterOutputItemSerial.classList.add('counter__output-item');
+			counterOutputItemSerial.classList.add('counter__output-item_serial');
+			counterOutputItemSerial.style.width = outputWidth + 'px';
+			counterOutputItemSerial.style.backgroundColor = myArr.color;
+
+			counterOutputSerial.appendChild(counterOutputItemSerial);
+
+		}
+	}
+
+	getDataFromLocalStoragePrev();
 
 	getDataFromSettings();
 	chooseActivityTag();
 	startRecording();
 	stopRecording();
+
 
 
 	function clearLocalStorage() {
