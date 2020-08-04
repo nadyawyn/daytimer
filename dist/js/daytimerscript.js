@@ -27,7 +27,11 @@ window.addEventListener('DOMContentLoaded', function () {
 		minutesVal = 0,
 		secondsVal = 0,
 		totalValSec = 0,
-		timeInterval = '';
+		timeInterval = '',
+
+		tagColorBase = {};
+
+
 
 
 	// Getting data from JSON file
@@ -63,13 +67,22 @@ window.addEventListener('DOMContentLoaded', function () {
 			for (let i = 0; i < myActivities.length; i++) {
 
 				let myActy = document.createElement('li'),
-					myColor = myActivities[i].color;
+					myColor = myActivities[i].color,
+					counterOutputItemAccum = document.createElement('div');
 
 				myActy.classList.add('activities__item');
+
+				counterOutputItemAccum.classList.add('counter__output-item_accum');
+				counterOutputItemAccum.classList.add(myColor);
+				counterOutputItemAccum.style.backgroundColor = myColor;
+				counterOutputItemAccum.style.height = (tagColorBase[myColor] / 1000) + 'px';
+				//counterOutputItemAccum.id = myColor;
 
 				myActy.innerHTML = '<svg width="16" height="16" viewBox="0 0 32 32"><path fill="' + myColor + '" d="M30.5 0h-12c-0.825 0-1.977 0.477-2.561 1.061l-14.879 14.879c-0.583 0.583-0.583 1.538 0 2.121l12.879 12.879c0.583 0.583 1.538 0.583 2.121 0l14.879-14.879c0.583-0.583 1.061-1.736 1.061-2.561v-12c0-0.825-0.675-1.5-1.5-1.5zM23 12c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"></path></svg>' + '&nbsp;' + myActivities[i].name;
 				actTagList.appendChild(myActy);
 				myActy.id = myColor;
+
+				counterOutputAccum.appendChild(counterOutputItemAccum);
 			}
 		}
 	}
@@ -85,7 +98,6 @@ window.addEventListener('DOMContentLoaded', function () {
 			startButton.textContent = 'start';
 		});
 	}
-
 	//Start button behavior
 	function startRecording() {
 		startButton.addEventListener('click', function () {
@@ -191,7 +203,6 @@ window.addEventListener('DOMContentLoaded', function () {
 
 		});
 	}
-
 	//Dynamic timer update
 	function updateClock() {
 		//setting variables for TIMER values
@@ -231,7 +242,7 @@ window.addEventListener('DOMContentLoaded', function () {
 			hours.textContent = hoursVal;
 		}
 	}
-
+	//Stop button behavior
 	function stopRecording() {
 		stopButton.addEventListener('click', function () {
 			if (this.classList.contains('inactive')) {
@@ -283,13 +294,13 @@ window.addEventListener('DOMContentLoaded', function () {
 
 		});
 	}
-
+	//Get progress data on refresh
 	function getDataFromLocalStoragePrev() {
 		for (let i = 1; i < localStorage.length; i++) {
 
 			let myArr = JSON.parse(localStorage.getItem(i));
 
-			let outputWidth = Math.floor(myArr.duration / 2000),
+			let outputWidth = Math.floor(myArr.duration / 1000),
 				counterOutputItemSerial = document.createElement('div');
 
 			counterOutputItemSerial.classList.add('counter__output-item');
@@ -301,16 +312,17 @@ window.addEventListener('DOMContentLoaded', function () {
 
 		}
 	}
-
+	//Get data from local storage
 	function getDataFromLocalStorage() {
 
 		for (let i = actCounter; i < localStorage.length; i++) {
 
 			let myArr = JSON.parse(localStorage.getItem(i));
 
-			let outputWidth = Math.floor(myArr.duration / 2000),
+
+			//Forming colored blocks for SERIAL output
+			let outputWidth = Math.floor(myArr.duration / 1000),
 				counterOutputItemSerial = document.createElement('div');
-			console.log(outputWidth);
 
 			counterOutputItemSerial.classList.add('counter__output-item');
 			counterOutputItemSerial.classList.add('counter__output-item_serial');
@@ -319,17 +331,60 @@ window.addEventListener('DOMContentLoaded', function () {
 
 			counterOutputSerial.appendChild(counterOutputItemSerial);
 
+			//Forming colored columns for ACCUM output
+
+
+			let thisCycleHeight = Math.floor(myArr.duration / 1000),
+				previousHeight = 0;
+			if (tagColorBase[myArr.color]) {
+				previousHeight = Math.floor(tagColorBase[myArr.color] / 1000);
+			} else {
+
+			}
+
+			let counterOutputAccumItem = document.querySelectorAll('.counter__output-item_accum'),
+
+				totalHeight = thisCycleHeight + previousHeight;
+
+			for (let i = 0; i < counterOutputAccumItem.length; i++) {
+
+				if (counterOutputAccumItem[i].classList.contains(myArr.color)) {
+					counterOutputAccumItem[i].style.height = totalHeight + 'px';
+				}
+
+			}
+
 		}
+
+
+
+	}
+	//Count how much time in total is spent on a certain action
+	function sumUpSpentTime() {
+		let myArrPrev = {};
+
+		for (let i = 1; i < localStorage.length; i++) {
+
+			myArrPrev = JSON.parse(localStorage.getItem(i));
+
+			if (!tagColorBase[myArrPrev.color]) {
+				tagColorBase[myArrPrev.color] = myArrPrev.duration;
+			} else {
+				tagColorBase[myArrPrev.color] = Number(tagColorBase[myArrPrev.color]) + Number(myArrPrev.duration);
+			}
+		}
+
 	}
 
+	sumUpSpentTime();
 	getDataFromLocalStoragePrev();
-
 	getDataFromSettings();
 	chooseActivityTag();
 	startRecording();
 	stopRecording();
 
 
+	console.log(tagColorBase);
 
 	function clearLocalStorage() {
 		let clearLS = document.getElementById('clearls');

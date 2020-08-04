@@ -6,7 +6,10 @@
 		border: 1px solid #bbb;
 
 		display: flex;
-		flex-flow: row wrap;
+
+		&_accum {
+			align-items: flex-end;
+		}
 
 		&-item {
 			display: block;
@@ -14,6 +17,14 @@
 
 			height: 100%;
 			width: 30px;
+
+			&_accum {
+				background-color: orange;
+				height: 5px;
+				flex-grow: 1;
+				flex-shrink: 1;
+				flex-basis: 100%;
+			}
 		}
 	}
 }

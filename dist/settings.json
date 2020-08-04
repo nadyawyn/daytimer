@@ -26,6 +26,10 @@
 		{
 			"name": "personal project",
 			"color": "#ff5f69"
+		},
+		{
+			"name": "eating",
+			"color": "#eee"
 		}
 	],
 	"users": {
