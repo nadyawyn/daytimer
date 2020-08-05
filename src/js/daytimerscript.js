@@ -275,7 +275,9 @@ window.addEventListener('DOMContentLoaded', function () {
 
 				resultDurationOutput.textContent = resultDhour + ':' + resultDmin + ':' + resultDsec;
 
-
+				//changing OPACITY of output data
+				let actOutputPar = document.getElementById('actOutputPar');
+				actOutputPar.style.opacity = '0.3';
 
 				//forming data ARRAY to save
 				let resultArray = {
