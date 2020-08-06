@@ -20,8 +20,10 @@ window.addEventListener('DOMContentLoaded', function () {
 		thisHistoryDiv = document.getElementById('history-activity'),
 		counterOutputSerial = document.querySelector('.counter__output_serial'),
 		counterOutputAccum = document.querySelector('.counter__output_accum'),
+		counterOutputTimeline = document.querySelector('.counter__output_timeline'),
 		timelineWrapperMarks = document.querySelector('.timeline__wrapper_marks'),
 		timelineWrapperDigits = document.querySelector('.timeline__wrapper_digits'),
+		//timelineElement = document.querySelector('.timeline__element'),
 		//Getting the CURRENT DATE
 		thisDate = new Date(),
 		thisYear = thisDate.getFullYear(),
@@ -136,6 +138,9 @@ window.addEventListener('DOMContentLoaded', function () {
 
 					thisEntryStart = document.createElement('div'),
 
+					thisEntryStartHours = document.createElement('div'),
+					thisEntryStartMin = document.createElement('div'),
+
 					thisEntryDuration = document.createElement('div'),
 
 					//creating elements for TIMER in progress output
@@ -170,6 +175,16 @@ window.addEventListener('DOMContentLoaded', function () {
 				thisEntryStart.classList.add('num' + actCounter);
 				thisEntryStart.textContent = thisStartTime;
 
+				thisEntryStartHours.classList.add('history__entry-start_hours');
+				thisEntryStartHours.classList.add('thishidden');
+				thisEntryStartHours.classList.add('num' + actCounter);
+				thisEntryStartHours.textContent = thisHours;
+
+				thisEntryStartMin.classList.add('history__entry-start_min');
+				thisEntryStartMin.classList.add('thishidden');
+				thisEntryStartMin.classList.add('num' + actCounter);
+				thisEntryStartMin.textContent = thisMinutes;
+
 				thisEntryDuration.classList.add('history__entry-duration');
 				thisEntryDuration.classList.add('num' + actCounter);
 
@@ -180,6 +195,8 @@ window.addEventListener('DOMContentLoaded', function () {
 				thisHistoryDiv.appendChild(thisEntryName);
 				thisHistoryDiv.appendChild(thisEntryColor);
 				thisHistoryDiv.appendChild(thisEntryStart);
+				thisHistoryDiv.appendChild(thisEntryStartHours);
+				thisHistoryDiv.appendChild(thisEntryStartMin);
 				thisHistoryDiv.appendChild(thisEntryDuration);
 
 				//setting classes, contents, and adding TIMER to place
@@ -265,6 +282,8 @@ window.addEventListener('DOMContentLoaded', function () {
 					resultName = document.querySelectorAll('.num' + actCounter)[2].textContent,
 					resultColor = document.querySelectorAll('.num' + actCounter)[3].textContent,
 					resultStartTime = document.querySelectorAll('.num' + actCounter)[4].textContent,
+					resultStartHours = document.querySelectorAll('.num' + actCounter)[5].textContent,
+					resultStartMin = document.querySelectorAll('.num' + actCounter)[6].textContent,
 
 					//getting DURATION
 					resultDuration = resultEndTime - +resultStartTime,
@@ -272,7 +291,7 @@ window.addEventListener('DOMContentLoaded', function () {
 					resultDmin = Math.floor((resultDuration / 1000 / 60) % 60),
 					resultDhour = Math.floor((resultDuration / (1000 * 60 * 60)) % 24),
 
-					resultDurationOutput = document.querySelectorAll('.num' + actCounter)[5];
+					resultDurationOutput = document.querySelectorAll('.num' + actCounter)[7];
 
 				resultDurationOutput.textContent = resultDhour + ':' + resultDmin + ':' + resultDsec;
 
@@ -286,7 +305,9 @@ window.addEventListener('DOMContentLoaded', function () {
 					date: thisTimestamp,
 					name: resultName,
 					color: resultColor,
-					duration: resultDuration
+					duration: resultDuration,
+					starthours: resultStartHours,
+					startmin: resultStartMin
 				};
 				//saving data to Local Storage
 
@@ -306,6 +327,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 			if (myArr) {
 				let outputWidth = Math.floor(myArr.duration / 1000 / 60),
+					outputWidthTimeline = Math.floor(myArr.duration / 1000 / 60 / 5 * 3),
 					counterOutputItemSerial = document.createElement('div');
 
 				counterOutputItemSerial.classList.add('counter__output-item');
@@ -314,6 +336,11 @@ window.addEventListener('DOMContentLoaded', function () {
 				counterOutputItemSerial.style.backgroundColor = myArr.color;
 
 				counterOutputSerial.appendChild(counterOutputItemSerial);
+
+				//Forming previous colored columns on TIMELINE
+				drawHistTagOnTimeline(myArr.starthours, myArr.startmin, outputWidthTimeline, myArr.color);
+				console.log(myArr.starthours);
+				console.log(myArr.startmin);
 			}
 
 
@@ -360,6 +387,10 @@ window.addEventListener('DOMContentLoaded', function () {
 				}
 
 			}
+
+			//Forming colored colums on TIMELINE
+			let widthOnTimeline = Math.floor(myArr.duration / 1000 / 60 / 5 * 3);
+			drawTagOnTimeline(widthOnTimeline, myArr.color);
 
 		}
 
@@ -416,6 +447,55 @@ window.addEventListener('DOMContentLoaded', function () {
 		}
 
 	}
+
+	function drawTagOnTimeline(thisWidth, thisBg) {
+		// текущая дата
+		let thisDate = new Date(),
+			thisElHour = thisDate.getHours(),
+			thisElMin = thisDate.getMinutes(),
+			timelineElement = document.createElement('div');
+
+		thisElHour = thisElHour * 36;
+		thisElMin = Math.floor(thisElMin / 5 * 3);
+
+		let thisElTime = thisElHour + thisElMin;
+
+		timelineElement.classList.add('timeline__element');
+		counterOutputTimeline.appendChild(timelineElement);
+
+		timelineElement.style.left = thisElTime + 'px';
+		timelineElement.style.width = thisWidth + 'px';
+		timelineElement.style.backgroundColor = thisBg;
+		// час в текущей временной зоне
+		//console.log(thisDate.getHours());
+		//console.log(thisDate.getMinutes());
+	}
+
+	function drawHistTagOnTimeline(thisTimeHour, thisTimeMin, thisWidth, thisBg) {
+		// текущая дата
+		let
+			thisElHour = thisTimeHour,
+			thisElMin = thisTimeMin,
+			timelineElement = document.createElement('div');
+
+		thisElHour = thisElHour * 36;
+		thisElMin = Math.floor(thisElMin / 5 * 3);
+
+		let thisElTime = thisElHour + thisElMin;
+
+		timelineElement.classList.add('timeline__element');
+		counterOutputTimeline.appendChild(timelineElement);
+
+		timelineElement.style.left = thisElTime + 'px';
+		timelineElement.style.width = thisWidth + 'px';
+		timelineElement.style.backgroundColor = thisBg;
+		// час в текущей временной зоне
+		//console.log(thisDate.getHours());
+		//console.log(thisDate.getMinutes());
+	}
+
+
+	//drawTagOnTimeline(50, 'red');
 
 	sumUpSpentTime();
 	getDataFromLocalStoragePrev();
