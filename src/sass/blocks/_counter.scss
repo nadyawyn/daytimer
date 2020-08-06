@@ -55,7 +55,7 @@
 
 		&_digits {
 			//outline: 1px solid yellowgreen;
-			bottom: 0;
+			bottom: 3px;
 			height: 20px;
 		}
 
@@ -76,5 +76,13 @@
 		&_low {
 			height: 3px;
 		}
+	}
+
+	&__digit {
+		font-size: 12px;
+		font-weight: 700;
+		color: #bbb;
+
+		width: 36px;
 	}
 }

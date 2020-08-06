@@ -21,6 +21,7 @@ window.addEventListener('DOMContentLoaded', function () {
 		counterOutputSerial = document.querySelector('.counter__output_serial'),
 		counterOutputAccum = document.querySelector('.counter__output_accum'),
 		timelineWrapperMarks = document.querySelector('.timeline__wrapper_marks'),
+		timelineWrapperDigits = document.querySelector('.timeline__wrapper_digits'),
 		//Getting the CURRENT DATE
 		thisDate = new Date(),
 		thisYear = thisDate.getFullYear(),
@@ -406,6 +407,16 @@ window.addEventListener('DOMContentLoaded', function () {
 		}
 	}
 
+	function drawDigits() {
+		for (let i = 0; i < 24; i++) {
+			let oneDigit = document.createElement('div');
+			oneDigit.classList.add('timeline__digit');
+			oneDigit.textContent = i;
+			timelineWrapperDigits.appendChild(oneDigit);
+		}
+
+	}
+
 	sumUpSpentTime();
 	getDataFromLocalStoragePrev();
 	getDataFromSettings();
@@ -415,6 +426,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
 	drawTimeline();
+	drawDigits();
 
 	console.log(tagColorBase);
 
