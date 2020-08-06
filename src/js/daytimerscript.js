@@ -1,11 +1,18 @@
 window.addEventListener('DOMContentLoaded', function () {
 
 	//Set the number of actions of Start button so far
-	let actCounter = 0,
+	let actCounter = 0;
+	if (localStorage.length != 0) {
+		actCounter = localStorage.length;
+	}
+	//alert(actCounter);
+
+	/* let actCounter = 0,
+		//actCounter = localStorage.length;
 		localStorageNumber = localStorage.getItem('actCounter');
 	if (localStorageNumber != 0) {
 		actCounter = localStorageNumber;
-	}
+	} */
 
 	//Setting the VARIABLES for the whole thing
 
@@ -107,8 +114,8 @@ window.addEventListener('DOMContentLoaded', function () {
 
 			} else {
 				//defining the number of pressing START button 
-				actCounter++;
-				localStorage.setItem("actCounter", actCounter);
+				//actCounter++;
+				//localStorage.setItem("actCounter", actCounter);
 				//changing START button appearance
 				this.classList.add('inactive');
 				this.textContent = 'in progress...';
@@ -248,6 +255,7 @@ window.addEventListener('DOMContentLoaded', function () {
 			if (this.classList.contains('inactive')) {
 
 			} else {
+				//actCounter++;
 				clearInterval(timeInterval);
 				stopButton.classList.add('inactive');
 				startButton.textContent = 'set a tag';
@@ -288,8 +296,9 @@ window.addEventListener('DOMContentLoaded', function () {
 					duration: resultDuration
 				};
 				//saving data to Local Storage
-				localStorage.setItem(actCounter, JSON.stringify(resultArray));
 
+				localStorage.setItem(actCounter, JSON.stringify(resultArray));
+				actCounter++;
 				getDataFromLocalStorage();
 			}
 
@@ -298,26 +307,30 @@ window.addEventListener('DOMContentLoaded', function () {
 	}
 	//Get progress data on refresh
 	function getDataFromLocalStoragePrev() {
-		for (let i = 1; i < localStorage.length; i++) {
+		for (let i = 0; i < localStorage.length; i++) {
+			//for (let i = 1; i < localStorage.length; i++) {
 
 			let myArr = JSON.parse(localStorage.getItem(i));
 
-			let outputWidth = Math.floor(myArr.duration / 1000),
-				counterOutputItemSerial = document.createElement('div');
+			if (myArr) {
+				let outputWidth = Math.floor(myArr.duration / 1000),
+					counterOutputItemSerial = document.createElement('div');
 
-			counterOutputItemSerial.classList.add('counter__output-item');
-			counterOutputItemSerial.classList.add('counter__output-item_serial');
-			counterOutputItemSerial.style.width = outputWidth + 'px';
-			counterOutputItemSerial.style.backgroundColor = myArr.color;
+				counterOutputItemSerial.classList.add('counter__output-item');
+				counterOutputItemSerial.classList.add('counter__output-item_serial');
+				counterOutputItemSerial.style.width = outputWidth + 'px';
+				counterOutputItemSerial.style.backgroundColor = myArr.color;
 
-			counterOutputSerial.appendChild(counterOutputItemSerial);
+				counterOutputSerial.appendChild(counterOutputItemSerial);
+			}
+
 
 		}
 	}
 	//Get data from local storage
 	function getDataFromLocalStorage() {
 
-		for (let i = actCounter; i < localStorage.length; i++) {
+		for (let i = actCounter - 1; i < localStorage.length; i++) {
 
 			let myArr = JSON.parse(localStorage.getItem(i));
 
@@ -364,16 +377,19 @@ window.addEventListener('DOMContentLoaded', function () {
 	//Count how much time in total is spent on a certain action
 	function sumUpSpentTime() {
 		let myArrPrev = {};
-
-		for (let i = 1; i < localStorage.length; i++) {
+		for (let i = 0; i < localStorage.length; i++) {
+			//for (let i = 1; i < localStorage.length; i++) {
 
 			myArrPrev = JSON.parse(localStorage.getItem(i));
 
-			if (!tagColorBase[myArrPrev.color]) {
-				tagColorBase[myArrPrev.color] = myArrPrev.duration;
-			} else {
-				tagColorBase[myArrPrev.color] = Number(tagColorBase[myArrPrev.color]) + Number(myArrPrev.duration);
+			if (myArrPrev) {
+				if (!tagColorBase[myArrPrev.color]) {
+					tagColorBase[myArrPrev.color] = myArrPrev.duration;
+				} else {
+					tagColorBase[myArrPrev.color] = Number(tagColorBase[myArrPrev.color]) + Number(myArrPrev.duration);
+				}
 			}
+
 		}
 
 	}
