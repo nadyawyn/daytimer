@@ -1,5 +1,10 @@
 window.addEventListener('DOMContentLoaded', function () {
 
+	var audStart = new Audio('audio/start.wav'),
+		//audStop = new Audio('audio/stop.wav'),
+		audChoose = new Audio('audio/choose.wav');
+
+
 	//Set the number of actions of Start button so far
 	let actCounter = 0;
 	if (localStorage.length != 0) {
@@ -89,6 +94,7 @@ window.addEventListener('DOMContentLoaded', function () {
 	//Tags behavior on click
 	function chooseActivityTag() {
 		actTagList.addEventListener('click', function (e) {
+			audChoose.play();
 			let tagText = e.target.textContent,
 				tagColor = e.target.id;
 
@@ -105,7 +111,7 @@ window.addEventListener('DOMContentLoaded', function () {
 			if ((thisActName == '') || (this.classList.contains('inactive'))) {
 
 			} else {
-
+				audStart.play();
 				this.classList.add('inactive');
 				this.textContent = 'in progress...';
 				stopButton.classList.remove('inactive');
@@ -240,7 +246,7 @@ window.addEventListener('DOMContentLoaded', function () {
 			if (this.classList.contains('inactive')) {
 
 			} else {
-				//actCounter++;
+				audStart.play();
 				clearInterval(timeInterval);
 				stopButton.classList.add('inactive');
 				startButton.textContent = 'set a tag';
