@@ -15,6 +15,11 @@
 			align-items: flex-end;
 		}
 
+		&_timeline {
+			height: 90px;
+			position: relative;
+		}
+
 		&-item {
 			display: block;
 			background-color: yellowgreen;
@@ -29,6 +34,47 @@
 				flex-shrink: 1;
 				flex-basis: 100%;
 			}
+		}
+	}
+}
+
+.timeline {
+	&__wrapper {
+		width: 100%;
+		position: absolute;
+		left: 0;
+
+		display: flex;
+		align-items: flex-end;
+
+		&_marks {
+			//outline: 1px solid orange;
+			bottom: 20px;
+			height: 10px;
+		}
+
+		&_digits {
+			//outline: 1px solid yellowgreen;
+			bottom: 0;
+			height: 20px;
+		}
+
+	}
+
+	&__mark {
+		width: 3px;
+		border-left: 1px solid #bbb;
+
+		&_high {
+			height: 10px;
+		}
+
+		&_mid {
+			height: 7px;
+		}
+
+		&_low {
+			height: 3px;
 		}
 	}
 }

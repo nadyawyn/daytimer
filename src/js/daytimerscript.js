@@ -20,6 +20,7 @@ window.addEventListener('DOMContentLoaded', function () {
 		thisHistoryDiv = document.getElementById('history-activity'),
 		counterOutputSerial = document.querySelector('.counter__output_serial'),
 		counterOutputAccum = document.querySelector('.counter__output_accum'),
+		timelineWrapperMarks = document.querySelector('.timeline__wrapper_marks'),
 		//Getting the CURRENT DATE
 		thisDate = new Date(),
 		thisYear = thisDate.getFullYear(),
@@ -383,6 +384,28 @@ window.addEventListener('DOMContentLoaded', function () {
 
 	}
 
+	function drawOneHour() {
+		for (let i = 0; i < 12; i++) {
+			let oneMark = document.createElement('div');
+			oneMark.classList.add('timeline__mark');
+			if (i == 0) {
+				oneMark.classList.add('timeline__mark_high');
+			} else if (i == 6) {
+				oneMark.classList.add('timeline__mark_mid');
+			} else {
+				oneMark.classList.add('timeline__mark_low');
+			}
+
+			timelineWrapperMarks.appendChild(oneMark);
+		}
+	}
+
+	function drawTimeline() {
+		for (let i = 0; i < 24; i++) {
+			drawOneHour();
+		}
+	}
+
 	sumUpSpentTime();
 	getDataFromLocalStoragePrev();
 	getDataFromSettings();
@@ -390,6 +413,8 @@ window.addEventListener('DOMContentLoaded', function () {
 	startRecording();
 	stopRecording();
 
+
+	drawTimeline();
 
 	console.log(tagColorBase);
 
