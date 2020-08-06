@@ -79,7 +79,7 @@ window.addEventListener('DOMContentLoaded', function () {
 				counterOutputItemAccum.classList.add('counter__output-item_accum');
 				counterOutputItemAccum.classList.add(myColor);
 				counterOutputItemAccum.style.backgroundColor = myColor;
-				counterOutputItemAccum.style.height = (tagColorBase[myColor] / 1000) + 'px';
+				counterOutputItemAccum.style.height = Math.floor(tagColorBase[myColor] / 1000 / 60) + 'px';
 				//counterOutputItemAccum.id = myColor;
 
 				myActy.innerHTML = '<svg width="16" height="16" viewBox="0 0 32 32"><path fill="' + myColor + '" d="M30.5 0h-12c-0.825 0-1.977 0.477-2.561 1.061l-14.879 14.879c-0.583 0.583-0.583 1.538 0 2.121l12.879 12.879c0.583 0.583 1.538 0.583 2.121 0l14.879-14.879c0.583-0.583 1.061-1.736 1.061-2.561v-12c0-0.825-0.675-1.5-1.5-1.5zM23 12c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"></path></svg>' + '&nbsp;' + myActivities[i].name;
@@ -303,7 +303,7 @@ window.addEventListener('DOMContentLoaded', function () {
 			let myArr = JSON.parse(localStorage.getItem(i));
 
 			if (myArr) {
-				let outputWidth = Math.floor(myArr.duration / 1000),
+				let outputWidth = Math.floor(myArr.duration / 1000 / 60),
 					counterOutputItemSerial = document.createElement('div');
 
 				counterOutputItemSerial.classList.add('counter__output-item');
@@ -326,7 +326,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
 			//Forming colored blocks for SERIAL output
-			let outputWidth = Math.floor(myArr.duration / 1000),
+			let outputWidth = Math.floor(myArr.duration / 1000 / 60),
 				counterOutputItemSerial = document.createElement('div');
 
 			counterOutputItemSerial.classList.add('counter__output-item');
@@ -339,10 +339,10 @@ window.addEventListener('DOMContentLoaded', function () {
 			//Forming colored columns for ACCUM output
 
 
-			let thisCycleHeight = Math.floor(myArr.duration / 1000),
+			let thisCycleHeight = Math.floor(myArr.duration / 1000 / 60),
 				previousHeight = 0;
 			if (tagColorBase[myArr.color]) {
-				previousHeight = Math.floor(tagColorBase[myArr.color] / 1000);
+				previousHeight = Math.floor(tagColorBase[myArr.color] / 1000 / 60);
 			} else {
 
 			}
