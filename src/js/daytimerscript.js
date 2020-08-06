@@ -390,7 +390,8 @@ window.addEventListener('DOMContentLoaded', function () {
 
 			//Forming colored colums on TIMELINE
 			let widthOnTimeline = Math.floor(myArr.duration / 1000 / 60 / 5 * 3);
-			drawTagOnTimeline(widthOnTimeline, myArr.color);
+			//drawTagOnTimeline(widthOnTimeline, myArr.color);
+			drawHistTagOnTimeline(myArr.starthours, myArr.startmin, widthOnTimeline, myArr.color);
 
 		}
 
