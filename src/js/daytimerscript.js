@@ -5,14 +5,6 @@ window.addEventListener('DOMContentLoaded', function () {
 	if (localStorage.length != 0) {
 		actCounter = localStorage.length;
 	}
-	//alert(actCounter);
-
-	/* let actCounter = 0,
-		//actCounter = localStorage.length;
-		localStorageNumber = localStorage.getItem('actCounter');
-	if (localStorageNumber != 0) {
-		actCounter = localStorageNumber;
-	} */
 
 	//Setting the VARIABLES for the whole thing
 
@@ -99,7 +91,7 @@ window.addEventListener('DOMContentLoaded', function () {
 		actTagList.addEventListener('click', function (e) {
 			let tagText = e.target.textContent,
 				tagColor = e.target.id;
-			//actOutput.textContent = tagText;
+
 			actOutput.innerHTML = '<p id="actOutputPar" class="' + tagColor + '" style="background-color: ' + tagColor + '; color:#fff">' + tagText + '</p>';
 			startButton.classList.remove('inactive');
 			startButton.textContent = 'start';
@@ -113,10 +105,7 @@ window.addEventListener('DOMContentLoaded', function () {
 			if ((thisActName == '') || (this.classList.contains('inactive'))) {
 
 			} else {
-				//defining the number of pressing START button 
-				//actCounter++;
-				//localStorage.setItem("actCounter", actCounter);
-				//changing START button appearance
+
 				this.classList.add('inactive');
 				this.textContent = 'in progress...';
 				stopButton.classList.remove('inactive');
@@ -216,10 +205,6 @@ window.addEventListener('DOMContentLoaded', function () {
 		let hours = document.querySelector('.timer__hours'),
 			minutes = document.querySelector('.timer__minutes'),
 			seconds = document.querySelector('.timer__seconds');
-		//testTC = document.querySelector('.testTimeCheck');
-
-		//totalValSec++;
-		//testTC.textContent = totalValSec;
 
 		if (secondsVal < 59) {
 			secondsVal++;
@@ -308,7 +293,6 @@ window.addEventListener('DOMContentLoaded', function () {
 	//Get progress data on refresh
 	function getDataFromLocalStoragePrev() {
 		for (let i = 0; i < localStorage.length; i++) {
-			//for (let i = 1; i < localStorage.length; i++) {
 
 			let myArr = JSON.parse(localStorage.getItem(i));
 
@@ -378,7 +362,6 @@ window.addEventListener('DOMContentLoaded', function () {
 	function sumUpSpentTime() {
 		let myArrPrev = {};
 		for (let i = 0; i < localStorage.length; i++) {
-			//for (let i = 1; i < localStorage.length; i++) {
 
 			myArrPrev = JSON.parse(localStorage.getItem(i));
 
