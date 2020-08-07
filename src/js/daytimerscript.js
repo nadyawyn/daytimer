@@ -84,7 +84,13 @@ window.addEventListener('DOMContentLoaded', function () {
 				counterOutputItemAccum.classList.add(myColor);
 				counterOutputItemAccum.style.backgroundColor = myColor;
 				counterOutputItemAccum.style.height = Math.floor(tagColorBase[myColor] / 1000 / 60) + 'px';
-				//counterOutputItemAccum.id = myColor;
+
+				let timeAccumOutputSec = Math.floor((tagColorBase[myColor] / 1000) % 60),
+					timeAccumOutputMin = Math.floor((tagColorBase[myColor] / 1000 / 60) % 60),
+					timeAccumOutputHours = Math.floor(tagColorBase[myColor] / 1000 / 60 / 24);
+				if ((typeof tagColorBase[myColor] == 'number') && (Math.floor(tagColorBase[myColor] / 1000 / 60) > 20)) {
+					counterOutputItemAccum.textContent = timeAccumOutputHours + ':' + timeAccumOutputMin + ':' + timeAccumOutputSec;
+				}
 
 				myActy.innerHTML = '<svg width="16" height="16" viewBox="0 0 32 32"><path fill="' + myColor + '" d="M30.5 0h-12c-0.825 0-1.977 0.477-2.561 1.061l-14.879 14.879c-0.583 0.583-0.583 1.538 0 2.121l12.879 12.879c0.583 0.583 1.538 0.583 2.121 0l14.879-14.879c0.583-0.583 1.061-1.736 1.061-2.561v-12c0-0.825-0.675-1.5-1.5-1.5zM23 12c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"></path></svg>' + '&nbsp;' + myActivities[i].name;
 				actTagList.appendChild(myActy);
@@ -335,6 +341,7 @@ window.addEventListener('DOMContentLoaded', function () {
 				counterOutputItemSerial.style.width = outputWidth + 'px';
 				counterOutputItemSerial.style.backgroundColor = myArr.color;
 
+
 				counterOutputSerial.appendChild(counterOutputItemSerial);
 
 				//Forming previous colored columns on TIMELINE
@@ -369,11 +376,10 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
 			let thisCycleHeight = Math.floor(myArr.duration / 1000 / 60),
-				previousHeight = 0;
+				previousHeight = 0,
+				thisCycleDurationSec = Math.floor(myArr.duration / 1000);
 			if (tagColorBase[myArr.color]) {
 				previousHeight = Math.floor(tagColorBase[myArr.color] / 1000 / 60);
-			} else {
-
 			}
 
 			let counterOutputAccumItem = document.querySelectorAll('.counter__output-item_accum'),
@@ -384,6 +390,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 				if (counterOutputAccumItem[i].classList.contains(myArr.color)) {
 					counterOutputAccumItem[i].style.height = totalHeight + 'px';
+					counterOutputAccumItem[i].textContent = thisCycleDurationSec;
 				}
 
 			}
@@ -449,7 +456,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 	}
 
-	function drawTagOnTimeline(thisWidth, thisBg) {
+	/* function drawTagOnTimeline(thisWidth, thisBg) {
 		// текущая дата
 		let thisDate = new Date(),
 			thisElHour = thisDate.getHours(),
@@ -470,7 +477,7 @@ window.addEventListener('DOMContentLoaded', function () {
 		// час в текущей временной зоне
 		//console.log(thisDate.getHours());
 		//console.log(thisDate.getMinutes());
-	}
+	} */
 
 	function drawHistTagOnTimeline(thisTimeHour, thisTimeMin, thisWidth, thisBg) {
 		// текущая дата
