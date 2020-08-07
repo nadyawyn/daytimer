@@ -87,7 +87,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 				let timeAccumOutputSec = Math.floor((tagColorBase[myColor] / 1000) % 60),
 					timeAccumOutputMin = Math.floor((tagColorBase[myColor] / 1000 / 60) % 60),
-					timeAccumOutputHours = Math.floor(tagColorBase[myColor] / 1000 / 60 / 24);
+					timeAccumOutputHours = Math.floor(tagColorBase[myColor] / 1000 / 60 / 60);
 				if ((typeof tagColorBase[myColor] == 'number') && (Math.floor(tagColorBase[myColor] / 1000 / 60) > 20)) {
 					counterOutputItemAccum.textContent = timeAccumOutputHours + ':' + timeAccumOutputMin + ':' + timeAccumOutputSec;
 				}
