@@ -372,7 +372,11 @@ window.addEventListener('DOMContentLoaded', function () {
 
 			let thisCycleHeight = Math.floor(myArr.duration / 1000 / 60),
 				previousHeight = 0,
-				thisCycleDurationSec = Math.floor(myArr.duration / 1000);
+
+				timeAccumOutputSec = Math.floor((myArr.duration / 1000) % 60),
+				timeAccumOutputMin = Math.floor((myArr.duration / 1000 / 60) % 60),
+				timeAccumOutputHours = Math.floor(myArr.duration / 1000 / 60 / 60);
+
 			if (tagColorBase[myArr.color]) {
 				previousHeight = Math.floor(tagColorBase[myArr.color] / 1000 / 60);
 			}
@@ -385,8 +389,16 @@ window.addEventListener('DOMContentLoaded', function () {
 
 				if (counterOutputAccumItem[i].classList.contains(myArr.color)) {
 					counterOutputAccumItem[i].style.height = totalHeight + 'px';
-					counterOutputAccumItem[i].textContent = thisCycleDurationSec;
+
+					if ((typeof myArr.duration == 'number') && (Math.floor(myArr.duration / 1000 / 60) > 20)) {
+						counterOutputAccumItem[i].textContent = timeAccumOutputHours + ':' + timeAccumOutputMin + ':' + timeAccumOutputSec;
+					}
+
+					//counterOutputAccumItem[i].textContent = thisCycleDurationSec;
 				}
+
+
+
 
 			}
 
