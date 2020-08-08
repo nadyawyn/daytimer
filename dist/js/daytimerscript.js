@@ -378,7 +378,7 @@ window.addEventListener('DOMContentLoaded', function () {
 			if (tagColorBase[myArr.color]) {
 				previousHeight = Math.floor(tagColorBase[myArr.color] / 1000 / 60);
 				tagColorBase[myArr.color] += myArr.duration;
-				timeAccumOutput = tagColorBase[myArr.color] + myArr.duration;
+				timeAccumOutput = tagColorBase[myArr.color];
 			} else {
 				tagColorBase[myArr.color] = myArr.duration;
 				timeAccumOutput = myArr.duration;
