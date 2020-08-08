@@ -85,7 +85,7 @@ window.addEventListener('DOMContentLoaded', function () {
 				let timeAccumOutputSec = Math.floor((tagColorBase[myColor] / 1000) % 60),
 					timeAccumOutputMin = Math.floor((tagColorBase[myColor] / 1000 / 60) % 60),
 					timeAccumOutputHours = Math.floor(tagColorBase[myColor] / 1000 / 60 / 60);
-				if ((typeof tagColorBase[myColor] == 'number') && (Math.floor(tagColorBase[myColor] / 1000 / 60) > 20)) {
+				if ((typeof tagColorBase[myColor] == 'number') && (Math.floor(tagColorBase[myColor] / 1000 / 60) > 15)) {
 					counterOutputItemAccum.textContent = timeAccumOutputHours + ':' + timeAccumOutputMin + ':' + timeAccumOutputSec;
 				}
 
@@ -372,17 +372,20 @@ window.addEventListener('DOMContentLoaded', function () {
 
 			let thisCycleHeight = Math.floor(myArr.duration / 1000 / 60),
 				previousHeight = 0,
+				timeAccumOutput = 0;
 
-				timeAccumOutputSec = Math.floor((myArr.duration / 1000) % 60),
-				timeAccumOutputMin = Math.floor((myArr.duration / 1000 / 60) % 60),
-				timeAccumOutputHours = Math.floor(myArr.duration / 1000 / 60 / 60);
 
 			if (tagColorBase[myArr.color]) {
 				previousHeight = Math.floor(tagColorBase[myArr.color] / 1000 / 60);
 				tagColorBase[myArr.color] += myArr.duration;
+				timeAccumOutput = tagColorBase[myArr.color] + myArr.duration;
 			} else {
 				tagColorBase[myArr.color] = myArr.duration;
+				timeAccumOutput = myArr.duration;
 			}
+			let timeAccumOutputSec = Math.floor((timeAccumOutput / 1000) % 60),
+				timeAccumOutputMin = Math.floor((timeAccumOutput / 1000 / 60) % 60),
+				timeAccumOutputHours = Math.floor(timeAccumOutput / 1000 / 60 / 60);
 
 			let counterOutputAccumItem = document.querySelectorAll('.counter__output-item_accum'),
 
@@ -394,7 +397,7 @@ window.addEventListener('DOMContentLoaded', function () {
 				if (counterOutputAccumItem[i].classList.contains(myArr.color)) {
 					counterOutputAccumItem[i].style.height = totalHeight + 'px';
 
-					if (totalHeight > 15) {
+					if (totalHeight > 1) {
 						counterOutputAccumItem[i].textContent = timeAccumOutputHours + ':' + timeAccumOutputMin + ':' + timeAccumOutputSec;
 					}
 
