@@ -482,25 +482,29 @@ window.addEventListener('DOMContentLoaded', function () {
 		timelineElement.style.backgroundColor = thisBg;
 	}
 
+	/* let myTags = {
+		"Classical music": 2,
+		"Alternative rock": 14,
+		"Pop": 4,
+		"Jazz": 12
+	}; */
+
+	let myTags = {
+		"Classical music": 5482,
+		"Alternative rock": 16243,
+		"Pop": 13571,
+		"Jazz": 12000
+	};
+
+	let myColors = ["#fde23e", "#f16e23", "#57d9ff", "teal"];
+
+
 	function drawPieChart() {
 		let myCanvas = document.getElementById("myCanvas");
 		myCanvas.width = 300;
 		myCanvas.height = 300;
 
 		let ctx = myCanvas.getContext("2d");
-
-		function drawLine(ctx, startX, startY, endX, endY) {
-			ctx.beginPath();
-			ctx.moveTo(startX, startY);
-			ctx.lineTo(endX, endY);
-			ctx.stroke();
-		}
-
-		function drawArc(ctx, centerX, centerY, radius, startAngle, endAngle) {
-			ctx.beginPath();
-			ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-			ctx.stroke();
-		}
 
 		function drawPieSlice(ctx, centerX, centerY, radius, startAngle, endAngle, color) {
 			ctx.fillStyle = color;
@@ -529,6 +533,7 @@ window.addEventListener('DOMContentLoaded', function () {
 				for (let categ in this.options.data) {
 					let val = this.options.data[categ];
 					let sliceAngle = 2 * Math.PI * val / totalValue;
+					//console.log(categ);
 
 					drawPieSlice(
 						this.ctx,
@@ -537,7 +542,8 @@ window.addEventListener('DOMContentLoaded', function () {
 						Math.min(this.canvas.width / 2, this.canvas.height / 2),
 						startAngle,
 						startAngle + sliceAngle,
-						this.colors[colorIndex % this.colors.length]
+						//this.colors[colorIndex % this.colors.length]
+						categ
 					);
 
 					startAngle += sliceAngle;
@@ -548,21 +554,16 @@ window.addEventListener('DOMContentLoaded', function () {
 		};
 
 
-		let myVinyls = {
-			"Classical music": 2,
-			"Alternative rock": 14,
-			"Pop": 4,
-			"Jazz": 12
-		};
-
-
 		let myPiechart = new Piechart({
 			canvas: myCanvas,
-			data: myVinyls,
-			colors: ["#fde23e", "#f16e23", "#57d9ff", "teal"]
+			//data: myTags,
+			data: tagColorBase
+			//colors: myColors
 		});
 		myPiechart.draw();
 	}
+
+
 
 
 
@@ -578,6 +579,9 @@ window.addEventListener('DOMContentLoaded', function () {
 
 	drawTimeline();
 	drawDigits();
+
+
+	drawPieChart();
 
 	console.log(tagColorBase);
 
