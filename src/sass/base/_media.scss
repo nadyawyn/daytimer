@@ -1,0 +1,55 @@
+@media (max-width: $tablet-width) {
+	.container {
+		width: auto;
+	}
+
+	.header {
+		&__title {
+			font-size: 48px;
+			margin: 20px 0;
+		}
+	}
+
+	.main {
+		&__items {
+			flex-flow: row wrap;
+		}
+
+		&__item {
+			margin-right: 0;
+			flex: 1 0 50%;
+
+			&:first-child {
+				flex: 0 0 100%;
+			}
+		}
+	}
+
+	.activities {
+		display: flex;
+		flex-flow: row wrap;
+
+		&__item {
+			flex: 1 1 33%;
+		}
+
+		li {
+			font-size: 18px;
+			line-height: 40px;
+		}
+	}
+}
+
+@media (max-width: $mobile-width_l) {
+	.header {
+		&__title {
+			font-size: 26px;
+		}
+	}
+
+	.activities {
+		&__item {
+			flex: 0 0 100%;
+		}
+	}
+}
