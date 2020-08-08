@@ -379,11 +379,15 @@ window.addEventListener('DOMContentLoaded', function () {
 
 			if (tagColorBase[myArr.color]) {
 				previousHeight = Math.floor(tagColorBase[myArr.color] / 1000 / 60);
+				tagColorBase[myArr.color] += myArr.duration;
+			} else {
+				tagColorBase[myArr.color] = myArr.duration;
 			}
 
 			let counterOutputAccumItem = document.querySelectorAll('.counter__output-item_accum'),
 
 				totalHeight = thisCycleHeight + previousHeight;
+			//tagColorBase[myArr.color] += myArr.duration;
 
 			for (let i = 0; i < counterOutputAccumItem.length; i++) {
 
@@ -394,7 +398,6 @@ window.addEventListener('DOMContentLoaded', function () {
 						counterOutputAccumItem[i].textContent = timeAccumOutputHours + ':' + timeAccumOutputMin + ':' + timeAccumOutputSec;
 					}
 
-					//counterOutputAccumItem[i].textContent = thisCycleDurationSec;
 				}
 
 
@@ -409,7 +412,9 @@ window.addEventListener('DOMContentLoaded', function () {
 
 		}
 
+		//Forming PIECHART
 
+		drawPieChart();
 
 	}
 	//Count how much time in total is spent on a certain action
@@ -482,23 +487,6 @@ window.addEventListener('DOMContentLoaded', function () {
 		timelineElement.style.backgroundColor = thisBg;
 	}
 
-	/* let myTags = {
-		"Classical music": 2,
-		"Alternative rock": 14,
-		"Pop": 4,
-		"Jazz": 12
-	}; */
-
-	let myTags = {
-		"Classical music": 5482,
-		"Alternative rock": 16243,
-		"Pop": 13571,
-		"Jazz": 12000
-	};
-
-	let myColors = ["#fde23e", "#f16e23", "#57d9ff", "teal"];
-
-
 	function drawPieChart() {
 		let myCanvas = document.getElementById("myCanvas");
 		myCanvas.width = 300;
@@ -533,7 +521,6 @@ window.addEventListener('DOMContentLoaded', function () {
 				for (let categ in this.options.data) {
 					let val = this.options.data[categ];
 					let sliceAngle = 2 * Math.PI * val / totalValue;
-					//console.log(categ);
 
 					drawPieSlice(
 						this.ctx,
@@ -542,7 +529,6 @@ window.addEventListener('DOMContentLoaded', function () {
 						Math.min(this.canvas.width / 2, this.canvas.height / 2),
 						startAngle,
 						startAngle + sliceAngle,
-						//this.colors[colorIndex % this.colors.length]
 						categ
 					);
 
@@ -556,9 +542,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 		let myPiechart = new Piechart({
 			canvas: myCanvas,
-			//data: myTags,
 			data: tagColorBase
-			//colors: myColors
 		});
 		myPiechart.draw();
 	}
