@@ -23,7 +23,7 @@ window.addEventListener('DOMContentLoaded', function () {
 		counterOutputTimeline = document.querySelector('.counter__output_timeline'),
 		timelineWrapperMarks = document.querySelector('.timeline__wrapper_marks'),
 		timelineWrapperDigits = document.querySelector('.timeline__wrapper_digits'),
-		//timelineElement = document.querySelector('.timeline__element'),
+
 		//Getting the CURRENT DATE
 		thisDate = new Date(),
 		thisYear = thisDate.getFullYear(),
@@ -38,9 +38,6 @@ window.addEventListener('DOMContentLoaded', function () {
 		timeInterval = '',
 
 		tagColorBase = {};
-
-
-
 
 	// Getting data from JSON file
 	function getDataFromSettings() {
@@ -346,8 +343,6 @@ window.addEventListener('DOMContentLoaded', function () {
 
 				//Forming previous colored columns on TIMELINE
 				drawHistTagOnTimeline(myArr.starthours, myArr.startmin, outputWidthTimeline, myArr.color);
-				console.log(myArr.starthours);
-				console.log(myArr.startmin);
 			}
 
 
@@ -456,31 +451,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 	}
 
-	/* function drawTagOnTimeline(thisWidth, thisBg) {
-		// текущая дата
-		let thisDate = new Date(),
-			thisElHour = thisDate.getHours(),
-			thisElMin = thisDate.getMinutes(),
-			timelineElement = document.createElement('div');
-
-		thisElHour = thisElHour * 36;
-		thisElMin = Math.floor(thisElMin / 5 * 3);
-
-		let thisElTime = thisElHour + thisElMin;
-
-		timelineElement.classList.add('timeline__element');
-		counterOutputTimeline.appendChild(timelineElement);
-
-		timelineElement.style.left = thisElTime + 'px';
-		timelineElement.style.width = thisWidth + 'px';
-		timelineElement.style.backgroundColor = thisBg;
-		// час в текущей временной зоне
-		//console.log(thisDate.getHours());
-		//console.log(thisDate.getMinutes());
-	} */
-
 	function drawHistTagOnTimeline(thisTimeHour, thisTimeMin, thisWidth, thisBg) {
-		// текущая дата
 		let
 			thisElHour = thisTimeHour,
 			thisElMin = thisTimeMin,
@@ -497,13 +468,94 @@ window.addEventListener('DOMContentLoaded', function () {
 		timelineElement.style.left = thisElTime + 'px';
 		timelineElement.style.width = thisWidth + 'px';
 		timelineElement.style.backgroundColor = thisBg;
-		// час в текущей временной зоне
-		//console.log(thisDate.getHours());
-		//console.log(thisDate.getMinutes());
+	}
+
+	function drawPieChart() {
+		let myCanvas = document.getElementById("myCanvas");
+		myCanvas.width = 300;
+		myCanvas.height = 300;
+
+		let ctx = myCanvas.getContext("2d");
+
+		function drawLine(ctx, startX, startY, endX, endY) {
+			ctx.beginPath();
+			ctx.moveTo(startX, startY);
+			ctx.lineTo(endX, endY);
+			ctx.stroke();
+		}
+
+		function drawArc(ctx, centerX, centerY, radius, startAngle, endAngle) {
+			ctx.beginPath();
+			ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+			ctx.stroke();
+		}
+
+		function drawPieSlice(ctx, centerX, centerY, radius, startAngle, endAngle, color) {
+			ctx.fillStyle = color;
+			ctx.beginPath();
+			ctx.moveTo(centerX, centerY);
+			ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+			ctx.closePath();
+			ctx.fill();
+		}
+
+		let Piechart = function (options) {
+			this.options = options;
+			this.canvas = options.canvas;
+			this.ctx = this.canvas.getContext("2d");
+			this.colors = options.colors;
+
+			this.draw = function () {
+				let totalValue = 0;
+				let colorIndex = 0;
+				for (let categ in this.options.data) {
+					let val = this.options.data[categ];
+					totalValue += val;
+				}
+
+				let startAngle = 0;
+				for (let categ in this.options.data) {
+					let val = this.options.data[categ];
+					let sliceAngle = 2 * Math.PI * val / totalValue;
+
+					drawPieSlice(
+						this.ctx,
+						this.canvas.width / 2,
+						this.canvas.height / 2,
+						Math.min(this.canvas.width / 2, this.canvas.height / 2),
+						startAngle,
+						startAngle + sliceAngle,
+						this.colors[colorIndex % this.colors.length]
+					);
+
+					startAngle += sliceAngle;
+					colorIndex++;
+				}
+
+			};
+		};
+
+
+		let myVinyls = {
+			"Classical music": 2,
+			"Alternative rock": 14,
+			"Pop": 4,
+			"Jazz": 12
+		};
+
+
+		let myPiechart = new Piechart({
+			canvas: myCanvas,
+			data: myVinyls,
+			colors: ["#fde23e", "#f16e23", "#57d9ff", "teal"]
+		});
+		myPiechart.draw();
 	}
 
 
-	//drawTagOnTimeline(50, 'red');
+
+
+
 
 	sumUpSpentTime();
 	getDataFromLocalStoragePrev();
@@ -511,7 +563,6 @@ window.addEventListener('DOMContentLoaded', function () {
 	chooseActivityTag();
 	startRecording();
 	stopRecording();
-
 
 	drawTimeline();
 	drawDigits();
