@@ -1,7 +1,7 @@
 # daytimer
 A browser script recording what time you devote to work or other activities during the day. 
 
-! It uses local storage of your browser and does not require any server part to store data.
+! It uses <strong>the local storage of your browser</strong> and does not require any server part to store data.
 
 !! It records the time you spend on a certain kind of activity and then presents it on various scales:
 <ul>
@@ -30,5 +30,6 @@ A browser script recording what time you devote to work or other activities duri
 <li>Any number of activities and corresponding colors can be set through SETTINGS.json
 <li>Gives bright visual representation of your daily activities in time and correlation
 </ul>
-
+<h2>To get the idea of how it works:</h2>
+Go to the live preview <a href="https://nadyawyn.github.io/daytimer/dist">here</a>.
 
