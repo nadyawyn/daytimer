@@ -397,7 +397,7 @@ window.addEventListener('DOMContentLoaded', function () {
 				if (counterOutputAccumItem[i].classList.contains(myArr.color)) {
 					counterOutputAccumItem[i].style.height = totalHeight + 'px';
 
-					if (totalHeight > 1) {
+					if (totalHeight > 15) {
 						counterOutputAccumItem[i].textContent = timeAccumOutputHours + ':' + timeAccumOutputMin + ':' + timeAccumOutputSec;
 					}
 
