@@ -40,6 +40,10 @@ h3 {
 	font-size: 0px;
 }
 
+.desktop-hidden {
+	display: none;
+}
+
 @import "blocks/header";
 @import "blocks/main";
 @import "blocks/buttons";

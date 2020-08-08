@@ -38,6 +38,17 @@
 			line-height: 40px;
 		}
 	}
+
+	.counter__output_timeline {
+		display: none;
+
+	}
+
+	.desktop-hidden {
+		display: block;
+		font-size: 24px;
+		color: #bbb;
+	}
 }
 
 @media (max-width: $mobile-width_l) {
@@ -52,4 +63,6 @@
 			flex: 0 0 100%;
 		}
 	}
+
+
 }
